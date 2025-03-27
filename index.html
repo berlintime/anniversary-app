@@ -50,11 +50,23 @@
             margin-top: 10px;
             border-radius: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .card img {
             max-width: 100%;
             border-radius: 10px;
             margin-top: 10px;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
         }
     </style>
 </head>
@@ -116,14 +128,26 @@
             document.getElementById("imageUpload").value = "";
         }
 
+        function deleteMessage(index) {
+            let savedMessages = JSON.parse(localStorage.getItem("savedMessages")) || [];
+            savedMessages.splice(index, 1);
+            localStorage.setItem("savedMessages", JSON.stringify(savedMessages));
+            displayMessages();
+        }
+
         function displayMessages() {
             let savedMessages = JSON.parse(localStorage.getItem("savedMessages")) || [];
             let messageContainer = document.getElementById("savedMessages");
             messageContainer.innerHTML = "";
-            savedMessages.forEach(msg => {
+            savedMessages.forEach((msg, index) => {
                 let card = document.createElement("div");
                 card.classList.add("card");
                 card.innerHTML = `<p>${msg.text}</p>`;
+                let deleteBtn = document.createElement("button");
+                deleteBtn.classList.add("delete-btn");
+                deleteBtn.innerText = "ลบ";
+                deleteBtn.onclick = function() { deleteMessage(index); };
+                card.appendChild(deleteBtn);
                 if (msg.image) {
                     let img = document.createElement("img");
                     img.src = msg.image;

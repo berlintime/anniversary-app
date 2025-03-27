@@ -3,25 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วันครบรอบของเรา 💖</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ศิลา ❤️ ปาล์มมี่ - วันครบรอบ</title>
+    <style>
+        body {
+            background-color: #ffebf0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #ff6699;
+        }
+        .anniversary, .birthdays, .messages {
+            margin-top: 20px;
+        }
+        textarea, input {
+            width: 90%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #ff6699;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #ff3366;
+        }
+        .card {
+            background: #fff5f8;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>💞 ศิลา ❤️ ปาล์มมี่ 💞</h1>
-
-        <div class="profile-container">
-            <div class="profile">
-                <img id="img1" src="default1.jpg" alt="Sila">
-            </div>
-            <div class="heart">❤️</div>
-            <div class="profile">
-                <img id="img2" src="default2.jpg" alt="Palmy">
-            </div>
+        <h1>ศิลา ❤️ ปาล์มมี่</h1>
+        <div class="anniversary">
+            <h2>วันครบรอบ: 20 มิถุนายน 2022 🎉</h2>
+            <p id="timeTogether"></p>
         </div>
-
-        <h3>วันครบรอบของเรา</h3>
-        <p id="anniversary-date">20 มิถุนายน 2022</p>
+        <div class="birthdays">
+            <h3>วันเกิดศิลา: 10 มิถุนายน 2003</h3>
+            <h3>วันเกิดปาล์มมี่: 21 กุมภาพันธ์ 2003</h3>
+        </div>
+        <div class="messages">
+            <h2>การ์ดถึงกัน 💌</h2>
+            <textarea id="message" placeholder="เขียนข้อความถึงกัน..."></textarea>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button onclick="saveMessage()">บันทึกข้อความ</button>
+            <div id="savedMessages"></div>
+        </div>
     </div>
+    <script>
+        function updateTimeTogether() {
+            let startDate = new Date("2022-06-20");
+            let now = new Date();
+            let diffTime = now - startDate;
+            let days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            let months = Math.floor(days / 30.44);
+            let years = Math.floor(months / 12);
+            months = months % 12;
+            let remainingDays = days % 30.44;
+            document.getElementById("timeTogether").innerText = `คบกันมาแล้ว ${years} ปี ${months} เดือน ${Math.floor(remainingDays)} วัน`;
+        }
+        updateTimeTogether();
+        setInterval(updateTimeTogether, 86400000);
+
+        function saveMessage() {
+            let message = document.getElementById("message").value;
+            let file = document.getElementById("imageUpload").files[0];
+            let savedMessages = JSON.parse(localStorage.getItem("savedMessages")) || [];
+            let newMessage = { text: message, image: "" };
+
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    newMessage.image = e.target.result;
+                    savedMessages.push(newMessage);
+                    localStorage.setItem("savedMessages", JSON.stringify(savedMessages));
+                    displayMessages();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                savedMessages.push(newMessage);
+                localStorage.setItem("savedMessages", JSON.stringify(savedMessages));
+                displayMessages();
+            }
+            document.getElementById("message").value = "";
+            document.getElementById("imageUpload").value = "";
+        }
+
+        function displayMessages() {
+            let savedMessages = JSON.parse(localStorage.getItem("savedMessages")) || [];
+            let messageContainer = document.getElementById("savedMessages");
+            messageContainer.innerHTML = "";
+            savedMessages.forEach(msg => {
+                let card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `<p>${msg.text}</p>`;
+                if (msg.image) {
+                    let img = document.createElement("img");
+                    img.src = msg.image;
+                    card.appendChild(img);
+                }
+                messageContainer.appendChild(card);
+            });
+        }
+        window.onload = displayMessages;
+    </script>
 </body>
 </html>

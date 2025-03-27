@@ -1,47 +1,49 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #ffebf0;
-    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
 }
 
-h1 {
-    color: #ff4081;
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
-.settings {
-    text-align: left;
-    margin-bottom: 20px;
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.settings label {
-    font-size: 14px;
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-.settings input, .settings select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
+.heart {
+    font-size: 30px;
 }
 
-button {
-    background: #ff4081;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+input[type="text"] {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.info p {
-    font-size: 18px;
-    margin: 10px 0;
+#counter {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
 }

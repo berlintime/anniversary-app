@@ -1,66 +1,34 @@
-// โหลดข้อมูลจาก Local Storage ถ้ามี
-function loadData() {
-    document.getElementById("name1").value = localStorage.getItem("name1") || "";
-    document.getElementById("name2").value = localStorage.getItem("name2") || "";
-    document.getElementById("startDate").value = localStorage.getItem("startDate") || "";
-    document.getElementById("birthday").value = localStorage.getItem("birthday") || "";
-    document.getElementById("theme").value = localStorage.getItem("theme") || "#ffebf0";
-    document.body.style.backgroundColor = document.getElementById("theme").value;
+// วันที่เริ่มคบกัน (ปี, เดือน (0 = ม.ค.), วัน)
+const startDate = new Date(2022, 5, 20);
 
-    updateAnniversary();
-}
-
-// บันทึกข้อมูล
-function saveData() {
-    localStorage.setItem("name1", document.getElementById("name1").value);
-    localStorage.setItem("name2", document.getElementById("name2").value);
-    localStorage.setItem("startDate", document.getElementById("startDate").value);
-    localStorage.setItem("birthday", document.getElementById("birthday").value);
-    localStorage.setItem("theme", document.getElementById("theme").value);
-
-    document.body.style.backgroundColor = document.getElementById("theme").value;
-    updateAnniversary();
-}
-
-// คำนวณวันครบรอบ
-function updateAnniversary() {
-    const name1 = localStorage.getItem("name1") || "คนที่ 1";
-    const name2 = localStorage.getItem("name2") || "คนที่ 2";
-    document.getElementById("names").innerText = `${name1} ❤️ ${name2}`;
-
-    const startDate = new Date(localStorage.getItem("startDate"));
-    if (isNaN(startDate)) return;
-
+function updateCounter() {
     const today = new Date();
-    const diffTime = today - startDate;
-    const daysTogether = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const monthsTogether = Math.floor(daysTogether / 30);
+    let diff = today - startDate;
+    
+    let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    let months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    let days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
 
-    document.getElementById("showStartDate").innerText = startDate.toISOString().split('T')[0];
-    document.getElementById("anniversary").innerText = daysTogether;
-    document.getElementById("month-count").innerText = monthsTogether;
-
-    const birthday = localStorage.getItem("birthday") || "";
-    document.getElementById("showBirthday").innerText = birthday;
+    document.getElementById('counter').innerText = `${years} ปี ${months} เดือน ${days} วัน`;
 }
 
-// แจ้งเตือนวันสำคัญ
-function checkNotifications() {
-    const today = new Date().toISOString().split('T')[0];
-    const anniversary = localStorage.getItem("startDate");
-    const birthday = localStorage.getItem("birthday");
+// อัปเดตเวลาทุกวัน
+setInterval(updateCounter, 1000);
+updateCounter();
 
-    if (anniversary && today === anniversary) {
-        alert("วันนี้วันครบรอบของคุณ! 🎉");
-    }
-
-    if (birthday && today === birthday) {
-        alert("สุขสันต์วันเกิดคนที่คุณรัก! 🎂");
-    }
+// ฟังก์ชันอัปโหลดรูปภาพ
+function uploadImage(inputId, imgId) {
+    document.getElementById(inputId).addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById(imgId).src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 }
 
-// โหลดข้อมูลเมื่อเปิดเว็บ
-window.onload = function () {
-    loadData();
-    checkNotifications();
-};
+uploadImage("upload1", "img1");
+uploadImage("upload2", "img2");

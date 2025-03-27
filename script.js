@@ -17,7 +17,7 @@ function updateCounter() {
     document.getElementById("counter").innerText = `${years} ปี ${months} เดือน ${days} วัน`;
 }
 
-// บันทึกข้อมูลลง Local Storage
+// ฟังก์ชันบันทึกข้อมูลลง Local Storage
 function saveData() {
     const name1 = document.getElementById("name1").value;
     const name2 = document.getElementById("name2").value;
@@ -32,6 +32,7 @@ function saveData() {
 
 // โหลดข้อมูลที่บันทึกไว้
 function loadData() {
+    // โหลดชื่อ
     document.getElementById("name1").value = localStorage.getItem("name1") || "";
     document.getElementById("name2").value = localStorage.getItem("name2") || "";
     document.getElementById("startDate").value = localStorage.getItem("startDate") || "";

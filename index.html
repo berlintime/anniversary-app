@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วันครบรอบของเรา</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💖 วันครบรอบของเรา 💖</h1>
+
+        <!-- ตั้งค่าข้อมูล -->
+        <div class="settings">
+            <label>ชื่อของเรา:</label>
+            <input type="text" id="name1" placeholder="ชื่อคนที่ 1">
+            <input type="text" id="name2" placeholder="ชื่อคนที่ 2">
+            
+            <label>วันเริ่มคบกัน:</label>
+            <input type="date" id="startDate">
+            
+            <label>วันเกิดของเธอ:</label>
+            <input type="date" id="birthday">
+
+            <label>เลือกธีมสี:</label>
+            <select id="theme">
+                <option value="#ffebf0">ชมพู</option>
+                <option value="#e3f2fd">ฟ้า</option>
+                <option value="#fbe9e7">ส้ม</option>
+            </select>
+
+            <button onclick="saveData()">บันทึก</button>
+        </div>
+
+        <!-- แสดงผล -->
+        <div class="profile">
+            <h2 id="names"></h2>
+        </div>
+
+        <div class="info">
+            <p>เราเริ่มคบกันเมื่อ: <span id="showStartDate"></span></p>
+            <p>วันครบรอบวันนี้: <span id="anniversary"></span> วัน</p>
+            <p>รอบประจำเดือนที่: <span id="month-count"></span></p>
+            <p>วันเกิดของเธอ: <span id="showBirthday"></span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
